@@ -5,6 +5,8 @@ Simple private HTML5 video gallery written in Flask.
 
 Features
 ======
+  - Automatically scans library for new movies (Remember to set a cronjob!)
+  - Automatically converts new videos into proper formats
   - Supports srt subtitles (Subtitle name must match movie filename)
   - Fetches movie data from RottenTomatoes API
   - Uses X-Accel-Redirect to serve videos in a secure way
@@ -12,12 +14,12 @@ Features
 
 Requirements
 ======
-  - FFmpeg [Custom install instructions available here](https://fisle.eu/view/Installing-FFmpeg-from-source-on-Debian-Wheezy)
+  - FFmpeg - [Custom install instructions available here](https://fisle.eu/view/Installing-FFmpeg-from-source-on-Debian-Wheezy)
 
 
 Bugs
 =====
-  - Not working in Firefox on Linux, due to licensing errors (Can enable WebM encoding in sources)
+  - Videos are not playing under Firefox on Linux, due to codec licensing issues. You can enable WebM encoding in sources.
 
 
 Installation
@@ -32,7 +34,7 @@ Edit app/templates/modify.html, change JS values 'apikey' to RottenTomatoes API 
 
 Edit config.py    
 
-Deploy!
+Deploy! [Gunicorn deploy guide](http://docs.gunicorn.org/en/latest/deploy.html)
 
 Point your browser to /setup to create new user
 
