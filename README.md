@@ -2,15 +2,23 @@ Netflask
 ======
 Simple private HTML5 video gallery written in Flask.
 
-Supports .srt subtitles. Uses RottenTomatoes API to fetch video info.
 
-Uses X-Accel-Redirect to serve video files.
+Features
+======
+  - Supports srt subtitles (Subtitle name must match movie filename)
+  - Fetches movie data from RottenTomatoes API
+  - Uses X-Accel-Redirect to serve videos in a secure way
+  
 
-Note: Subtitle names must be identical to video file, apart from extension.
+Requirements
+======
+  - FFmpeg [Custom install instructions available here](https://fisle.eu/view/Installing-FFmpeg-from-source-on-Debian-Wheezy)
 
-By default does not support Firefox on Linux (stupid licensing issues?), but you can enable encoding to webm in source.
 
-Needs also FFmpeg on host machine. [Install instructions here](https://fisle.eu/view/Installing-FFmpeg-from-source-on-Debian-Wheezy)
+Bugs
+=====
+  - Not working in Firefox on Linux, due to licensing errors (Can enable WebM encoding in sources)
+
 
 Installation
 =====
@@ -20,17 +28,17 @@ Installation
 
     pip install -r requirements.txt
 
-Edit scan.py and point first line to absolute path of venv/bin/python
-
 Edit app/templates/modify.html, change JS values 'apikey' to RottenTomatoes API key.
 
 Edit config.py    
 
-    ./run.py
+Deploy!
 
-Browse to 127.0.0.1:5000/setup
+Point your browser to /setup to create new user
 
 Set up cronjob for scan.py. This scans for new video files.
+
+    */5 * * * * /path/to/scan.py scan_folders
 
 
 Deploying
