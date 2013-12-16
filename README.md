@@ -10,6 +10,8 @@ Note: Subtitle names must be identical to video file, apart from extension.
 
 By default does not support Firefox on Linux (stupid licensing issues?), but you can enable encoding to webm in source.
 
+Needs also FFmpeg on host machine.
+
 Installation
 =====
     virtualenv venv
