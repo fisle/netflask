@@ -96,7 +96,9 @@ def video(movie):
   url = url.replace('.avi','')
   url = url.replace('.mkv','')
   # Append correct extension to it
-  redirect_path = '/raw_videos/'+url+'.'+extension
+  redirect_path = '/raw_videos/{!s}.{!s}'.format(url, extension)
+  print redirect_path
+
   response = make_response('')
   # Generate proper mimetypes
   if extension == 'webm':
@@ -119,7 +121,8 @@ def modify():
     movie = form.name.data
 
     # Get movie data and put it to our database
-    movie = urllib2.urlopen('http://api.rottentomatoes.com/api/public/v1.0/movies/'+movie+'.json?apikey='+ROTTEN_KEY)
+    rotten_url = 'http://api.rottentomatoes.com/api/public/v1.0/movies/{!s}.json?apikey={!s}'.format(movie, ROTTEN_KEY)
+    movie = urllib2.urlopen(rotten_url)
     movie = movie.read()
     movie = json.loads(movie)
     description = movie['synopsis']

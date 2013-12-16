@@ -21,7 +21,7 @@ celery = Celery(broker=BROKER_URL, backend=CELERY_RESULT_BACKEND)
 @celery.task()
 def convert_ogg(id, movie):
   movie_out = movie.replace(movie[-4:], ".ogv")
-  command = 'ffmpeg -i "'+movie+'" -threads '+str(CONVERT_CORES)+' -acodec libvorbis -ac 2 -ar 44100 -crf 18 "'+movie_out+'"'
+  command = 'ffmpeg -i "{!s}" -threads {!s} -acodec libvorbis -ac 2 -ar 44100 -crf 18 "{!s}"'.format(movie, CONVERT_CORES, movie_out)
   proc = subprocess.Popen(shlex.split(command))
   proc.communicate()
   complete(id)
@@ -29,7 +29,7 @@ def convert_ogg(id, movie):
 @celery.task()
 def convert_webm(id, movie):
   movie_out = movie.replace(movie[-4:], ".webm")
-  command = 'ffmpeg -i "'+movie+'" -threads '+str(CONVERT_CORES)+' -acodec libvorbis -ac 2 -ar 44100 -crf 18 -vcodec libvpx "'+movie_out+'"'
+  command = 'ffmpeg -i "{!s}" -threads {!s} -acodec libvorbis -ac 2 -ar 44100 -crf 18 -vcodec libvpx "{!s}"'.format(movie, CONVERT_CORES, movie_out)
   proc = subprocess.Popen(shlex.split(command))
   proc.communicate()
   complete(id)
@@ -37,7 +37,7 @@ def convert_webm(id, movie):
 @celery.task()
 def convert_mp4(id, movie):
   movie_out = movie.replace(movie[-4:], ".mp4") # Replace extension with .mp4
-  command = 'ffmpeg -i "'+movie+'" -threads '+str(CONVERT_CORES)+' -acodec libfaac -vcodec libx264 -crf 18 "'+movie_out+'"' # create command
+  command = 'ffmpeg -i "{!s}" -threads {!s} -acodec libfaac -vcodec libx264 -crf 18 "{!s}"'.format(movie, CONVERT_CORES, movie_out)
   proc = subprocess.Popen(shlex.split(command)) # split command properly and run it
   proc.communicate()
   # movie converted? we are done :>
