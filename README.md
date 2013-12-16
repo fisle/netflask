@@ -10,7 +10,7 @@ Note: Subtitle names must be identical to video file, apart from extension.
 
 By default does not support Firefox on Linux (stupid licensing issues?), but you can enable encoding to webm in source.
 
-Needs also FFmpeg on host machine.
+Needs also FFmpeg on host machine. [Install instructions here](https://fisle.eu/view/Installing-FFmpeg-from-source-on-Debian-Wheezy)
 
 Installation
 =====
