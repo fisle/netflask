@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+  <form action="" method="post" name="login" class="form-signin">
+    <h2 class="form-signin-heading">Please sign in</h2>
+    {% if form.errors %}
+    {% if form.errors.username and form.errors.password %}
+    <div class="alert alert-info alert-dismissable">
+      <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <i class="icon-exclamation"></i> Please enter username and password
+    </div>
+    {% elif form.errors.csrf_token %}
+    <div class="alert alert-info alert-dismissable">
+      <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <i class="icon-exclamation"></i> {% for error in form.errors.csrf_token %}{{error}}{% endfor %}
+    </div>
+    {% else %}
+    {% for error in form.errors %}
+    <div class="alert alert-info alert-dismissable">
+      <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <i class="icon-exclamation"></i> Please enter {{error}}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endif %}
+    {{form.hidden_tag()}}
+    {{form.username(class_="form-control", placeholder="Username")}}
+    {{form.password(class_="form-control", placeholder="Password")}}
+    <label class="checkbox">
+      {{form.remember_me}} Remember Me
+    </label>
+    <input class="btn btn-primary btn-block" type="submit" value="Sign In">
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+{% if movie %}
+<div class="video">
+  <video controls preload style="width:100%;height:100%;">
+    <source type="video/mp4" src="/videos/{{movie.id}}{{movie.type}}">
+    <track kind="subtitles" src="/subtitles/?movie={{movie.srt}}" srclang="en">
+    <object width="320" height="240" type="application/x-shockwave-flash" data="/flashmediaelement.swf">
+      <param name="movie" value="/static/melement/flashmediaelement.swf">
+      <param name="flashvars" value="controls=true&file={{movie.id}}{{movie.type}}">
+      This browser does not support video.
+    </object>
+  </video>
+</div>
+<script>
+  var width = $(window).width() * 0.8;
+  var height = width / 2.40;
+  $('video,audio').mediaelementplayer({
+    //defaultVideoWidth: width,
+    //defaultVideoHeight: height
+  });
+</script>
+{% else %}
+Select <a href="{{url_for('movies')}}">video</a> to watch
+{% endif %}
+{% endblock %}

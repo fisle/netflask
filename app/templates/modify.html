@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block head %}
+<script>
+  $(document).ready(function(){
+    $(".sname").select2({
+      placeholder: "Search for movie",
+      minimumInputLength: 2,
+      ajax: {
+        url: "http://api.rottentomatoes.com/api/public/v1.0/movies.json",
+        dataType: 'jsonp',
+        data: function (term, page) {
+          return {
+            q: term,
+            page_limit: 10,
+            apikey: "API_KEY"
+          };
+        },
+        results: function(data, page){
+          return { results: data.movies};
+        }
+      },
+      initSelection: function(element, callback){
+        var id = $(element).val();
+        if (id !== ""){
+          $.ajax("http://api.rottentomatoes.com/api/public/v1.0/movies/"+id+".json", {
+            data: {
+              apikey: "API_KEY"
+            },
+            dataType: "jsonp"
+          }).done(function(data){ callback(data); });
+        }
+      },
+      formatResult: movieFormatResult,
+      formatSelection: movieFormatSelection,
+      dropdownCssClass: "bigdrop",
+      escapeMarkup: function(m){ return m; }
+    });
+  });
+  function movieFormatResult(movie){
+    var markup = "<table class='movie-result'><tr>";
+    if (movie.posters !== undefined && movie.posters.thumbnail !== undefined) {
+      markup += "<td class='movie-image'><img src='" + movie.posters.thumbnail + "'/></td>";
+    }
+    markup += "<td class='movie-info'><div class='movie-title'>" + movie.title + "</div>";
+    if (movie.critics_consensus !== undefined) {
+      markup += "<div class='movie-synopsis'>" + movie.critics_consensus + "</div>";
+    }
+    else if (movie.synopsis !== undefined) {
+      markup += "<div class='movie-synopsis'>" + movie.synopsis + "</div>";
+    }
+    markup += "</td></tr></table>"
+    return markup;
+  }
+  function movieFormatSelection(movie) {
+    return movie.title;
+  }
+</script>
+{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1>{{items|count}} new items found</h1>
+</div>
+<div class="container">
+  {% for item in items %}
+    <form action="" method="post" name="modify">
+      {{form.hidden_tag(form.csrf_token)}}
+      {{form.id(value=item.id)}}
+      {{item.url}} Name: {{form.name(class_="sname")}}
+      <button class="btn btn-primary" type="submit">Add to database</button>
+    </form>
+  {% endfor %}
+</div>
+{% endblock %}

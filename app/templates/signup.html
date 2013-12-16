@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <form class="form-signin form-horizontal" action="" method="post" name="signup">
+    <h2 class="form-signin-heading">Sign up</h2>
+    {{form.hidden_tag()}}
+    {% for error in form.errors.username %}
+    <span class="text-danger">{{error}}</span>
+    {% endfor %}
+    {{form.username(class_="form-control", placeholder="Username")}}
+    {{form.password(class_="form-control", placeholder="Password")}}
+    {{form.confirm(class_="form-control", placeholder="Repeat password")}}
+    <input class="btn btn-primary btn-block" type="submit" value="Create Account">
+  </form>
+</div>
+
+{% endblock %}

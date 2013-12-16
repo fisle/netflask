@@ -1,0 +1,11 @@
+venv
+*pyc
+.*.swp
+app.db
+*.mkv
+*.webm
+*.srt
+*.mp4
+*.avi
+*.sub
+video

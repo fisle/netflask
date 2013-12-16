@@ -8,6 +8,8 @@ Uses X-Accel-Redirect to serve video files.
 
 Note: Subtitle names must be identical to video file, apart from extension.
 
+By default does not support Firefox on Linux (stupid licensing issues?), but you can enable encoding to webm in source.
+
 Installation
 =====
     virtualenv venv
