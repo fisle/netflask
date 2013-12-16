@@ -1,4 +1,4 @@
-Flaskfix
+Netflask
 ======
 Simple private HTML5 video gallery written in Flask.
 
