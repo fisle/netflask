@@ -5,12 +5,11 @@ from sqlalchemy import exc
 from app import app, db, lm
 from forms import LoginForm, SignupForm, ModifyForm
 from models import User, Movie
-from flask.ext.bcrypt import Bcrypt
 from flask.ext.wtf import Form
 from wtforms import TextField
 import os, glob, formic, urllib2, base64, json
 from config import CONVERT_CORES, VIDEO_FOLDER, ROTTEN_KEY
-bcrypt = Bcrypt(app)
+from werkzeug.security import generate_password_hash, check_password_hash
 
 @lm.user_loader
 def load_user(user_id):
@@ -32,7 +31,7 @@ def setup():
       # Passed form validation? continue
       if form.validate_on_submit():
         # Create user object and add it to database
-        user = User(username = form.username.data, password = bcrypt.generate_password_hash(form.password.data))
+        user = User(username = form.username.data, password = generate_password_hash(form.password.data))
         db.session.add(user)
         db.session.commit()
         flash('Account created! You are now logged in!')
@@ -165,7 +164,7 @@ def signup():
   form = SignupForm()
   # Form validation passed? Add new user.
   if form.validate_on_submit():
-    user = User(username = form.username.data, password = bcrypt.generate_password_hash(form.password.data))
+    user = User(username = form.username.data, password = generate_password_hash(form.password.data))
     db.session.add(user)
     db.session.commit()
     flash('Account created! You are now logged in!')
@@ -189,7 +188,7 @@ def login():
     # User exists
     if user_data:
       # Password matches
-      if bcrypt.check_password_hash(user_data.password, form.password.data):
+      if check_password_hash(user_data.password, form.password.data):
         # Ticket 'remember me'?
         if 'remember_me' in session:
           remember_me = session['remember_me']
