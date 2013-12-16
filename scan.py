@@ -1,4 +1,4 @@
-#!/home/fisle/netflask/venv/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 # Script to check for new movies.
