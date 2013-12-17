@@ -34,6 +34,8 @@
             <li><a href="{{url_for('signup')}}"><i class="fa fa-magic"></i> Create Account</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+            <li class="navbar-text">Hello, {{g.user.username}}</li>
+            <li><a href="{{url_for('profile')}}">Profile</a></li>
             <li><a href="{{url_for('logout')}}">Logout</a></li>
           </ul>
           {% endif %}

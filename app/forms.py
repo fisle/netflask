@@ -33,3 +33,11 @@ class ModifyForm(Form):
   id = HiddenField('id')
   name = TextField('name', validators = [Required()])
 
+class PasswordForm(Form):
+  password = PasswordField('password', validators = [Required(message='Please enter old password')])
+  newpassword = PasswordField('newpassword', [
+    Required(message='New password cannot be empty'),
+    EqualTo('confirm', message='Passwords did not match'),
+    Length(min=8, max=100, message='Password too short')
+  ])
+  confirm = PasswordField('Repeat password', validators = [Required()])

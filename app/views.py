@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for, session, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from sqlalchemy import exc
 from app import app, db, lm
-from forms import LoginForm, SignupForm, ModifyForm
+from forms import LoginForm, SignupForm, ModifyForm, PasswordForm
 from models import User, Movie
 from flask.ext.wtf import Form
 from wtforms import TextField
@@ -158,6 +158,19 @@ def modify():
   items = Movie.query.filter_by(status = 1).all()
   return render_template('modify.html', form = form, items = items)
 
+@app.route('/profile', methods = ['GET', 'POST'])
+@login_required
+def profile():
+  form = PasswordForm()
+  if form.validate_on_submit():
+    user_data = User.query.filter_by(id = g.user.id).first()
+    if check_password_hash(user_data.password, form.password.data):
+      user_data.password = generate_password_hash(form.newpassword.data)
+      db.session.commit()
+      flash('Password changed!')
+      return redirect(url_for('profile'))
+  return render_template('profile.html', form = form)
+  
 # Register page. Only logged in users can create new users
 # TODO: Only staff can register accounts
 @app.route('/signup', methods = ['GET', 'POST'])

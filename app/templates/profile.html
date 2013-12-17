@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <form class="form-signin form-horizonal" action="" method="post" name="profile">
+    <div class="page-header">
+      <h2>Change Password<br>
+    </div>
+    {{form.hidden_tag()}}
+    {{form.password(class_="form-control", placeholder="Old password")}}
+    {{form.newpassword(class_="form-control", placeholder="New password")}}
+    {{form.confirm(class_="form-control", placeholder="Repeat password")}}
+    <input class="btn btn-primary btn-block" type="submit" value="Change Password">
+  </form>
+</div>
+
+{% endblock %}
