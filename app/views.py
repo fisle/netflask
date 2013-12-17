@@ -97,7 +97,6 @@ def video(movie):
   url = url.replace('.mkv','')
   # Append correct extension to it
   redirect_path = '/raw_videos/{!s}.{!s}'.format(url, extension)
-  print redirect_path
 
   response = make_response('')
   # Generate proper mimetypes

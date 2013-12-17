@@ -4,7 +4,9 @@
 <div class="video">
   <video controls preload style="width:100%;height:100%;">
     <source type="video/mp4" src="/videos/{{movie.id}}{{movie.type}}">
-    <track kind="subtitles" src="/subtitles/?movie={{movie.srt}}" srclang="en">
+    <track kind="subtitles" src="/subtitles/?movie={{movie.srt}}" srclang="Default">
+    <track kind="subtitles" src="/subtitles/?movie={{movie.srt|replace('.srt', '.eng.srt')}}" srclang="en">
+    <track kind="subtitles" src="/subtitles/?movie={{movie.srt|replace('.srt', '.fin.srt')}}" srclang="fi">
     <object width="320" height="240" type="application/x-shockwave-flash" data="/flashmediaelement.swf">
       <param name="movie" value="/static/melement/flashmediaelement.swf">
       <param name="flashvars" value="controls=true&file={{movie.id}}{{movie.type}}">
