@@ -35,6 +35,9 @@
 .form-signin #confirm {
   margin-top: -1px;
 }
+.form-signin #newpassword {
+  margin-top: -1px;
+}
 .nav-pills > li > a {
   color: black;
   font-size: 15pt;
