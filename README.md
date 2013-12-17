@@ -69,3 +69,9 @@ pip install -r requirements.txt fails?
     wget http://python-distribute.org/distribute_setup.py
 
     python distribute_setup.py
+
+
+Like my work?
+=====
+Donations are always accepted and encourages the development of Open Source Software.
+BTC: 19LUqCSZjMqy8H5jQTiHdmfcAPd5ZcyLJm
