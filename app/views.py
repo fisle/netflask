@@ -161,11 +161,17 @@ def modify():
 @app.route('/profile', methods = ['GET', 'POST'])
 @login_required
 def profile():
+  """Profile page with ability to change password"""
   form = PasswordForm()
+  # Form submitted?
   if form.validate_on_submit():
+    # Fetch current user's data
     user_data = User.query.filter_by(id = g.user.id).first()
+    # Check if old password was correct
     if check_password_hash(user_data.password, form.password.data):
+      # Generate new password
       user_data.password = generate_password_hash(form.newpassword.data)
+      # Done, commit to database
       db.session.commit()
       flash('Password changed!')
       return redirect(url_for('profile'))
