@@ -32,10 +32,7 @@
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
-.form-signin #confirm {
-  margin-top: -1px;
-}
-.form-signin #newpassword {
+.form-signin #confirm, .form-signin #newpassword {
   margin-top: -1px;
 }
 .nav-pills > li > a {
