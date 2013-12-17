@@ -24,21 +24,25 @@ Bugs
 
 Installation
 =====
+    git clone http://git.vpsboard.com/fisle/netflask.git
+
+    cd netflask
+
     virtualenv venv
 
     source venv/bin/activate
 
     pip install -r requirements.txt
 
-Edit app/templates/modify.html, change JS values 'apikey' to RottenTomatoes API key.
+  * Edit app/templates/modify.html, change JS values 'apikey' to RottenTomatoes API key.
 
-Edit config.py    
+  * Edit config.py    
 
-Deploy! [Gunicorn deploy guide](http://docs.gunicorn.org/en/latest/deploy.html)
+  * Deploy! [Gunicorn deploy guide](http://docs.gunicorn.org/en/latest/deploy.html)
 
-Point your browser to /setup to create new user
+  * Point your browser to /setup to create new user
 
-Set up cronjob for scan.py. This scans for new video files.
+  * Set up cronjob for scan.py. This scans for new video files.
 
     */5 * * * * /path/to/venv/bin/python /path/to/scan.py scan_folders
 
