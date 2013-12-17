@@ -40,7 +40,7 @@ Point your browser to /setup to create new user
 
 Set up cronjob for scan.py. This scans for new video files.
 
-    */5 * * * * /path/to/scan.py scan_folders
+    */5 * * * * /path/to/venv/bin/python /path/to/scan.py scan_folders
 
 
 Deploying
