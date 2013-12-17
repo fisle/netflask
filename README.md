@@ -5,9 +5,10 @@ Simple private HTML5 video gallery written in Flask.
 
 Features
 ======
+  - HTML5 player using mediaElement player
   - Automatically scans library for new movies (Remember to set a cronjob!)
   - Automatically converts new videos into proper formats
-  - Supports srt subtitles (Subtitle name must match movie filename)
+  - Automatically fetches subtitles
   - Fetches movie data from RottenTomatoes API
   - Uses X-Accel-Redirect to serve videos in a secure way
   
