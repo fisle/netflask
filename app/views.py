@@ -5,11 +5,35 @@ from sqlalchemy import exc
 from app import app, db, lm
 from forms import LoginForm, SignupForm, ModifyForm, PasswordForm
 from models import User, Movie
+from functools import wraps
 from flask.ext.wtf import Form
 from wtforms import TextField
 import os, glob, formic, urllib2, base64, json
 from config import CONVERT_CORES, VIDEO_FOLDER, ROTTEN_KEY
 from werkzeug.security import generate_password_hash, check_password_hash
+
+def is_moderator():
+  """Return true if user level is greater than zero"""
+  try:
+    role = User.query.filter_by(id = g.user.id).first().role
+    if role > 0:
+      return True
+    else:
+      return False
+  # Catch exception when not logged in
+  except AttributeError:
+    return False
+
+def admin_required(f):
+  @wraps(f)
+  @login_required
+  def decorated_function(*args, **kwargs):
+    role = g.user.role
+    if role not in [1, 2]:
+      flash('Invalid permissions.')
+      return redirect(url_for('index'))
+    return f(*args, **kwargs)
+  return decorated_function
 
 @lm.user_loader
 def load_user(user_id):
@@ -19,6 +43,7 @@ def load_user(user_id):
 @app.before_request
 def before_request():
   g.user = current_user
+  g.user.is_moderator = is_moderator()
 
 # Setup page
 @app.route('/setup', methods = ['GET', 'POST'])
@@ -31,7 +56,7 @@ def setup():
       # Passed form validation? continue
       if form.validate_on_submit():
         # Create user object and add it to database
-        user = User(username = form.username.data, password = generate_password_hash(form.password.data))
+        user = User(username = form.username.data, password = generate_password_hash(form.password.data), role = 2)
         db.session.add(user)
         db.session.commit()
         flash('Account created! You are now logged in!')
@@ -216,7 +241,6 @@ def login():
           session.pop('remember_me', None)
         # All good, let's log user in
         login_user(user_data, remember = remember_me)
-        flash('Logged in!')
         return redirect(request.args.get('next') or url_for('index'))
       else:
         flash('Invalid username or password')
@@ -227,6 +251,31 @@ def login():
 @app.route('/logout')
 def logout():
   logout_user()
-  flash('Logged out!')
   return redirect(url_for('index'))
 
+@app.route('/admin/<what>/<int:who>')
+@app.route('/admin/')
+@admin_required
+def admin(what = None, who = None):
+  if who == 1:
+    flash('Deleting of admin account is not possible.')
+    return redirect(url_for('admin'))
+  if what is None and who is None:
+    users = User.query.all()
+    return render_template('admin.html', users = users)
+  else:
+    user = User.query.filter_by(id = who).first()
+    name = user.username
+    if what == 'delete':
+      db.session.delete(user)
+      message = 'User {!s} deleted.'.format(name)
+    elif what == 'promote':
+      user.role = 1
+      message = 'User {!s} promoted to moderator.'.format(name)
+    elif what == 'demote':
+      user.role = 0
+      message = 'User {!s} demoted to normal user.'.format(name)
+    else:
+      return redirect(url_for('admin'))
+    db.session.commit()
+  return redirect(url_for('admin'))

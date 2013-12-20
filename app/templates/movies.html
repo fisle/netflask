@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 {% if new_movies %}
-<div class="alert alert-info"><a href="{{url_for('modify')}}">New videos found! Click to add them to collection!</a></div>
+  {% if g.user.is_moderator %}
+    <div class="alert alert-info"><a href="{{url_for('modify')}}">New videos found! Click to add them to collection!</a></div>
+  {% endif %}
 {% endif %}
 <div class="page-header">
   <h1>Select a movie</h1>

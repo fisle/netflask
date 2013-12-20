@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+  <h1>Admin Dashboard</h1>
+</div>
+
+{% for user in users %}
+
+  <div class="row">
+    <div class="col-md-4">
+      {% if user.role == 2 %}
+        <span class="text-primary">[ADMIN]</span> 
+      {% elif user.role == 1 %}
+        <span class="text-primary">[MOD]</span> 
+      {% endif %}
+      {{user.username}}
+    </div>
+    <div class="col-md-2">
+      {% if user.id != 1 %}
+        <a href="{{url_for('admin', what = 'delete', who = user.id)}}">Delete</a>
+      {% endif %}
+      {% if user.role == 0 %}
+        <a href="{{url_for('admin', what = 'promote', who = user.id)}}">Promote</a>
+      {% elif user.role == 1 %}
+        <a href="{{url_for('admin', what = 'demote', who = user.id)}}">Demote</a>
+      {% endif %}
+    </div>
+  </div>
+
+{% endfor %}
+
+{% endblock %}

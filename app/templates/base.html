@@ -30,13 +30,16 @@
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li><a href="{{url_for('index')}}"><i class="fa fa-home"></i> Home</a></li>
-          {% if g.user.is_authenticated() %}
+          {% if g.user.is_moderator %}
             <li><a href="{{url_for('signup')}}"><i class="fa fa-magic"></i> Create Account</a></li>
+            <li><a href="{{url_for('admin')}}"><i class="fa fa-dashboard"></i> Admin</a></li>
+          {% endif %}
           </ul>
+          {% if g.user.is_authenticated() %}
           <ul class="nav navbar-nav navbar-right">
             <li class="navbar-text">Hello, {{g.user.username}}</li>
-            <li><a href="{{url_for('profile')}}">Profile</a></li>
-            <li><a href="{{url_for('logout')}}">Logout</a></li>
+            <li><a href="{{url_for('profile')}}"><i class="fa fa-user"></i> Profile</a></li>
+            <li><a href="{{url_for('logout')}}"><i class=" fa fa-sign-out"></i> Logout</a></li>
           </ul>
           {% endif %}
         </div>

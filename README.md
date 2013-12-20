@@ -15,6 +15,8 @@ Features
 
 Requirements
 ======
+  - Python 2
+  - RabbitMQ server
   - FFmpeg - [Custom install instructions available here](https://fisle.eu/view/Installing-FFmpeg-from-source-on-Debian-Wheezy)
 
 
@@ -75,3 +77,4 @@ Like my work?
 =====
 Donations are always accepted and encourages the development of Open Source Software.
 BTC: 19LUqCSZjMqy8H5jQTiHdmfcAPd5ZcyLJm
+LTC: LMGK2Hu8SotnKYRxV4NE8sZ7wKBc6Aaezo

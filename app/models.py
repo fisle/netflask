@@ -1,11 +1,17 @@
 from app import app, db
 
+# Roles
+ROLE_USER = 0
+ROLE_MOD = 1
+ROLE_ADMIN = 2
+
 # User model
 class User(db.Model):
   __tablename__ = 'users'
   id = db.Column(db.Integer, primary_key = True)
   username = db.Column(db.String(64), index = True, unique = True)
   password = db.Column(db.String)
+  role = db.Column(db.SmallInteger, default = ROLE_USER)
 
   def is_authenticated(self):
     return True
