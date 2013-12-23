@@ -50,3 +50,26 @@
 .vjs-default-skin .vjs-volume-level { background-color: #44ade6 }
 .vjs-default-skin .vjs-control-bar { font-size: 63% }
 .sname { width: 60%; }
+
+/* Colors */
+.navbar-inverse {
+  background: #322536;
+  border: none;
+  border-bottom: 10px solid #00b4ff;
+}
+.navbar-inverse .navbar-brand {
+  color: #00b4ff !important;
+}
+.navbar-text, .navbar a {
+  color: #bbbbbb !important;
+}
+h1, h2, h3, h4, h5 {
+  color: #00b4ff;
+}
+a {
+  color: #00b4ff;
+}
+#wrap, body {
+  background: #eeeeee;
+  color: #515151;
+}
