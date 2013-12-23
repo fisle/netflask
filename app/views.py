@@ -77,15 +77,43 @@ def setup():
 @app.route('/index')
 @login_required
 def index():
+  sort = request.args.get('sort')
+  way = request.args.get('way')
+  if way == '1':
+    way = 'desc'
+  else:
+    way = 'asc'
+  if sort == 'rating':
+    movies = ['ratings {!s}'.format(way)]
+  elif sort == 'name':
+    movies = ['name {!s}'.format(way)]
+  else:
+    movies = ['name']
+  movies = Movie.query.filter_by(status = 2).order_by(*movies).all()
+  for movie in movies:
+    movie.genres = movie.genres.split(',')
   new_movies = Movie.query.filter_by(status = 1).all()
-  movies = Movie.query.filter_by(status = 2).order_by(Movie.name.asc()).all()
   return render_template('movies.html', movies = movies, new_movies = new_movies)
+
+@app.route('/genre/<search_tag>')
+@login_required
+def genre(search_tag):
+  movies = Movie.query.filter_by(status = 2).all()
+  hits = []
+  for movie in movies:
+    taglist = []
+    tags = movie.genres.split(',')
+    for tag in tags:
+      if tag == search_tag:
+        hits.append(movie)
+        movie.genres = movie.genres.split(',')
+  return render_template('movies.html', movies = hits, search = search_tag)
 
 # Watch movie page
 @app.route('/movies/watch/<movie_id>')
 @login_required
 def movie(movie_id):
-  movie = Movie.query.filter_by(id = movie_id).first()
+  movie = Movie.query.filter_by(id = movie_id).first_or_404()
   return render_template('index.html', movie = movie)
 
 # Subtitles. For scandinavian letters to work we need to re-encode them to UTF-8

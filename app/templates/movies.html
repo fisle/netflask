@@ -5,13 +5,54 @@
     <div class="alert alert-info"><a href="{{url_for('modify')}}">New videos found! Click to add them to collection!</a></div>
   {% endif %}
 {% endif %}
+{% if search is defined %}
+  <ol class="breadcrumb">
+    <li><a href="{{url_for('index')}}">Home</a></li>
+    <li class="active">Search</li>
+  </ol>
+{% endif %}
 <div class="page-header">
-  <h1>Select a movie</h1>
+  <h1>
+    Select a movie
+    {% if search is defined %}
+      <small>Category: {{search}}</small>
+    {% endif %}
+  </h1>
 </div>
 <table class="table .table-hover">
-  <tr><th>Image</th><th>Rating</th><th>Genre</th><th>Movie</th></tr>
+  <tr>
+    <th>Image</th>
+    <th style="width: 90px;">
+      Score
+      <a href="{{url_for('index')}}?sort=rating"><i class="fa fa-angle-down"></i></a>
+      <a href="{{url_for('index')}}?sort=rating&amp;way=1"><i class="fa fa-angle-up"></i></a>
+    </th>
+    <th>
+      Genre
+    </th>
+    <th>
+      Name
+      <a href="{{url_for('index')}}?sort=name"><i class="fa fa-angle-down"></i></a>
+      <a href="{{url_for('index')}}?sort=name&amp;way=1"><i class="fa fa-angle-up"></i></a>
+    </th>
+  </tr>
 {% for movie in movies %}
-<tr><td><img src="{{movie.posters}}" class="pull-left"></td><td>{{movie.ratings}}/100</td><td>{{movie.genres}}</td><td><h3 style="margin:0;padding-bottom:0;"><a href="{{url_for('movie', movie_id = movie.id)}}">{{movie.name}}</a></h3>{{movie.description}}</td></tr>
+<tr>
+  <td>
+    <img src="{{movie.posters}}" class="pull-left">
+  </td>
+  <td>
+    {{movie.ratings}}/100
+  </td>
+  <td>
+    {% for genre in movie.genres %}
+      <a href="{{url_for('genre', search_tag = genre)}}">{{genre}}</a>
+    {% endfor %}
+  </td>
+  <td>
+    <h3 style="margin:0;padding-bottom:0;"><a href="{{url_for('movie', movie_id = movie.id)}}">{{movie.name}}</a></h3>{{movie.description}}
+  </td>
+</tr>
 {% endfor %}
 </table>
 {% endblock %}

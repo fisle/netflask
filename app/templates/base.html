@@ -37,7 +37,7 @@
           </ul>
           {% if g.user.is_authenticated() %}
           <ul class="nav navbar-nav navbar-right">
-            <li class="navbar-text">Hello, {{g.user.username}}</li>
+            <li class="navbar-text">Hello, {{g.user.username}}&nbsp;</li> 
             <li><a href="{{url_for('profile')}}"><i class="fa fa-user"></i> Profile</a></li>
             <li><a href="{{url_for('logout')}}"><i class=" fa fa-sign-out"></i> Logout</a></li>
           </ul>
