@@ -203,9 +203,8 @@ def profile():
   return render_template('profile.html', form = form)
   
 # Register page. Only logged in users can create new users
-# TODO: Only staff can register accounts
 @app.route('/signup', methods = ['GET', 'POST'])
-@login_required # Comment this line to let guests create new accounts
+@admin_required
 def signup():
   form = SignupForm()
   # Form validation passed? Add new user.
@@ -278,4 +277,5 @@ def admin(what = None, who = None):
     else:
       return redirect(url_for('admin'))
     db.session.commit()
+    flash(message)
   return redirect(url_for('admin'))
