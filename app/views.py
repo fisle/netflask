@@ -91,7 +91,7 @@ def index():
     movies = ['name']
   movies = Movie.query.filter_by(status = 2).order_by(*movies).all()
   for movie in movies:
-    movie.genres = movie.genres.split(',')
+    movie.genres = movie.genres.split(', ')
   new_movies = Movie.query.filter_by(status = 1).all()
   return render_template('movies.html', movies = movies, new_movies = new_movies)
 
@@ -102,11 +102,11 @@ def genre(search_tag):
   hits = []
   for movie in movies:
     taglist = []
-    tags = movie.genres.split(',')
+    tags = movie.genres.split(', ')
     for tag in tags:
       if tag == search_tag:
         hits.append(movie)
-        movie.genres = movie.genres.split(',')
+        movie.genres = movie.genres.split(', ')
   return render_template('movies.html', movies = hits, search = search_tag)
 
 # Watch movie page
