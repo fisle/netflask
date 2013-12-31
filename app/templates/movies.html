@@ -31,6 +31,48 @@
     </p>
 </div>
 
+<div class="col-md-10">
+    <div id="accordion" class="panel-group">
+        {% for movie in movies %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <img src="{{movie.posters}}" class="pull-left" style="margin-right:10px;">
+                    <i class="fa fa-star"></i> <b>{{movie.ratings}}</b>/100
+                    <i class="fa fa-tags"></i>
+                    {% for genre in movie.genres %}
+                        <a href="{{url_for('genre', search_tag = genre)}}">{{genre}}</a>{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                    <div class="pull-right">
+                        Subtitles:
+                        {% for subtitle in movie.subtitles %}
+                            {{subtitle.language}}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                        {% if movie.subtitles is not iterable %}
+                            None
+                        {% endif %}
+                    </div>
+                    <h3 style="margin-top:5px;">
+                        <a href="{{url_for('movie', movie_id = movie.id)}}">
+                            <small>
+                                <i class="fa fa-play"></i>
+                            </small>
+                            {{movie.name}}
+                        </a>
+                    </h3>
+                    <p>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{movie.name|replace(' ', '')}}">View Description</a>
+                    </p>
+                </div>
+                <div id="collapse{{movie.namereplace(' ', '')}}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        {{movie.description}}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
 {% for movie in movies %}
 <div class="row" style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #dddddd;">
     <div class="col-md-1 col-xs-3">
