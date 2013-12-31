@@ -76,5 +76,7 @@ pip install -r requirements.txt fails?
 Like my work?
 =====
 Donations are always accepted and encourages the development of Open Source Software.
+
 BTC: 19LUqCSZjMqy8H5jQTiHdmfcAPd5ZcyLJm
+
 LTC: LMGK2Hu8SotnKYRxV4NE8sZ7wKBc6Aaezo
