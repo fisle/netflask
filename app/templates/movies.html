@@ -19,40 +19,34 @@
     {% endif %}
   </h1>
 </div>
-<table class="table .table-hover">
-  <tr>
-    <th>Image</th>
-    <th style="width: 90px;">
-      Score
-      <a href="{{url_for('index')}}?sort=rating"><i class="fa fa-angle-down"></i></a>
-      <a href="{{url_for('index')}}?sort=rating&amp;way=1"><i class="fa fa-angle-up"></i></a>
-    </th>
-    <th>
-      Genre
-    </th>
-    <th>
-      Name
-      <a href="{{url_for('index')}}?sort=name"><i class="fa fa-angle-down"></i></a>
-      <a href="{{url_for('index')}}?sort=name&amp;way=1"><i class="fa fa-angle-up"></i></a>
-    </th>
-  </tr>
+
+<div>
+    <p class="lead">
+        Sort by: Rating
+        <a href="{{url_for('index')}}?sort=rating&amp;way=1"><i class="fa fa-angle-down"></i></a>
+        <a href="{{url_for('index')}}?sort=rating"><i class="fa fa-angle-up"></i></a>
+        Name
+        <a href="{{url_for('index')}}?sort=name&amp;way=1"><i class="fa fa-angle-down"></i></a>
+        <a href="{{url_for('index')}}?sort=name"><i class="fa fa-angle-up"></i></a>
+    </p>
+</div>
+
 {% for movie in movies %}
-<tr>
-  <td>
-    <img src="{{movie.posters}}" class="pull-left">
-  </td>
-  <td>
-    {{movie.ratings}}/100
-  </td>
-  <td>
-    {% for genre in movie.genres %}
-      <a href="{{url_for('genre', search_tag = genre)}}">{{genre}}</a>
-    {% endfor %}
-  </td>
-  <td>
-    <h3 style="margin:0;padding-bottom:0;"><a href="{{url_for('movie', movie_id = movie.id)}}">{{movie.name}}</a></h3>{{movie.description}}
-  </td>
-</tr>
+<div class="row" style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #dddddd;">
+    <div class="col-md-1 col-xs-3">
+        <img src="{{movie.posters}}">
+        <p style="padding-left: 5px;"><strong>{{movie.ratings}}</strong>/100</p>
+    </div>
+    <div class="col-md-2">
+        <i class="fa fa-tags"></i>
+        {% for genre in movie.genres %}
+            <a href="{{url_for('genre', search_tag = genre)}}">{{genre}}</a>{% if not loop.last %},{% endif %}
+        {% endfor %}
+    </div>
+    <div class="col-md-8">
+        <h3 style="margin:0;padding-bottom:0;"><a href="{{url_for('movie', movie_id = movie.id)}}">{{movie.name}}</a></h3>
+        {{movie.description}}
+    </div>
+</div>
 {% endfor %}
-</table>
 {% endblock %}

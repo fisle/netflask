@@ -42,14 +42,6 @@
 .nav-stacked {
   border: 1px solid #eee;
 }
-.nav-pills > li.active > a{
-  /*background: black;*/
-}
-
-.vjs-default-skin .vjs-play-progress,
-.vjs-default-skin .vjs-volume-level { background-color: #44ade6 }
-.vjs-default-skin .vjs-control-bar { font-size: 63% }
-.sname { width: 60%; }
 
 /* Colors */
 .navbar-inverse {
