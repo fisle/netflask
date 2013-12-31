@@ -73,22 +73,4 @@
     </div>
 </div>
 
-{% for movie in movies %}
-<div class="row" style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #dddddd;">
-    <div class="col-md-1 col-xs-3">
-        <img src="{{movie.posters}}">
-        <p style="padding-left: 5px;"><strong>{{movie.ratings}}</strong>/100</p>
-    </div>
-    <div class="col-md-2">
-        <i class="fa fa-tags"></i>
-        {% for genre in movie.genres %}
-            <a href="{{url_for('genre', search_tag = genre)}}">{{genre}}</a>{% if not loop.last %},{% endif %}
-        {% endfor %}
-    </div>
-    <div class="col-md-8">
-        <h3 style="margin:0;padding-bottom:0;"><a href="{{url_for('movie', movie_id = movie.id)}}">{{movie.name}}</a></h3>
-        {{movie.description}}
-    </div>
-</div>
-{% endfor %}
 {% endblock %}
