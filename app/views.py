@@ -98,21 +98,27 @@ def index():
 @app.route('/genre/<search_tag>')
 @login_required
 def genre(search_tag):
+    """Search function by tags"""
+    # Get all movies
     movies = Movie.query.filter_by(status = 2).all()
     hits = []
+    # Loop through them
     for movie in movies:
         taglist = []
+        # Split them into list
         tags = movie.genres.split(', ')
         for tag in tags:
+            # If matches search tag:
             if tag == search_tag:
+                # Append it to our very own list
                 hits.append(movie)
                 movie.genres = movie.genres.split(', ')
     return render_template('movies.html', movies = hits, search = search_tag)
 
-# Watch movie page
 @app.route('/movies/watch/<movie_id>')
 @login_required
 def movie(movie_id):
+    """Fetch movie or 404"""
     movie = Movie.query.filter_by(id = movie_id).first_or_404()
     return render_template('index.html', movie = movie)
 
