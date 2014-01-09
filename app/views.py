@@ -8,7 +8,7 @@ from models import User, Movie
 from functools import wraps
 from flask.ext.wtf import Form
 from wtforms import TextField
-import os, glob, formic, urllib2, base64, json
+import os, glob, formic, urllib2, base64, json, zlib
 from config import CONVERT_CORES, VIDEO_FOLDER, ROTTEN_KEY
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -178,8 +178,15 @@ def modify():
         movie = form.name.data
         # Get movie data and put it to our database
         rotten_url = 'http://api.rottentomatoes.com/api/public/v1.0/movies/{!s}.json?apikey={!s}'.format(movie, ROTTEN_KEY)
-        movie = urllib2.urlopen(rotten_url)
-        movie = movie.read()
+        req = urllib2.Request(rotten_url, headers={'Accept-Encoding': 'gzip, identity'})
+        conn = urllib2.urlopen(req)
+        movie = conn.read()
+        try:
+            if conn.headers['content-encoding'] == 'gzip':
+                movie = zlib.decompress(movie, 16+zlib.MAX_WBITS)
+            movie = json.loads(movie)
+        except KeyError:
+            movie = json.loads(movie)
         movie = json.loads(movie)
         description = movie['synopsis']
         genres = movie['genres']
@@ -245,7 +252,7 @@ def signup():
         user = User(username = form.username.data, password = generate_password_hash(form.password.data))
         db.session.add(user)
         db.session.commit()
-        flash('Account created! You are now logged in!')
+        flash('Account created!')
         login_user(user)
         return redirect(url_for('index'))
     return render_template('signup.html', form = form)
