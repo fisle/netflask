@@ -184,9 +184,8 @@ def modify():
         try:
             if conn.headers['content-encoding'] == 'gzip':
                 movie = zlib.decompress(movie, 16+zlib.MAX_WBITS)
-            movie = json.loads(movie)
         except KeyError:
-            movie = json.loads(movie)
+            pass
         movie = json.loads(movie)
         description = movie['synopsis']
         genres = movie['genres']
