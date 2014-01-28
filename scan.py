@@ -50,6 +50,18 @@ def complete(id):
     movie.status = 1
     db.session.commit()
 
+def sub2srt(subtitle):
+    """Converts sub file to srt, using subconvert"""
+    filename, file_extension = os.path.splitext(subtitle)
+    if file_extension == '.sub':
+        command = 'subconvert -q "{!s}"'.format(subtitle)
+        proc = subprocess.Popen(shlex.split(command))
+        proc.communicate()
+        os.remove(subtitle)
+        return True
+    else:
+        return False
+
 @celery.task()
 def get_subtitle(id, file_name):
     """Fetches subtitles automatically using frameboise, then converts them to srt with subconvert"""
@@ -70,6 +82,9 @@ def get_subtitle(id, file_name):
                 # Fuck your whitespace
                 subtitle = subtitle.strip()
                 # Silly sub files, go away
+                filename, file_extension = os.path.splitext(subtitle)
+                if file_extension == '.sub':
+                    sub2srt(subtitle)
                 subtitle = subtitle.replace('.sub', '.srt')
                 # Why do you not enforce .lang. in filename?!
                 if subtitle.find('.{!s}.'.format(lang)) == -1:
