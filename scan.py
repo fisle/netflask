@@ -96,7 +96,7 @@ def get_subtitle(id, file_name):
                 # Fetch movie info
                 m = Movie.query.get(id)
                 # Insert subtitle to database
-                s = subtitle(srt = subtitle, language = value, movie = m)
+                s = Subtitle(srt = subtitle, language = value, movie = m)
                 db.session.add(s)
                 db.session.commit()
         except IndexError:
