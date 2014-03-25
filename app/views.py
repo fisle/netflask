@@ -76,7 +76,7 @@ def setup():
 @app.route('/index')
 @login_required
 def index():
-    """Lists movies with status of 1 (ready for viewing)"""
+    """Lists movies with status of 2 (ready for viewing)"""
     sort = request.args.get('sort')
     way = request.args.get('way')
     if way == '1':
