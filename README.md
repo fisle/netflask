@@ -16,8 +16,9 @@ Features
 Requirements
 ======
   - Python 2
+  - python-dev
   - RabbitMQ server
-  - FFmpeg - [Custom install instructions available here](https://fisle.eu/view/Installing-FFmpeg-from-source-on-Debian-Wheezy)
+  - FFmpeg - [Custom install instructions available here](https://fisle.eu/installing-ffmpeg-from-source-on-debian-wheezy/)
 
 
 Bugs
